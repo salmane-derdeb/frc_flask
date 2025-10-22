@@ -1,0 +1,44 @@
+{% extends "layout.html" %}
+{% block content %}
+<h2>Manage Students</h2>
+
+
+
+<h3>Add New Student</h3>
+<form method="POST" action="/add_student" enctype="multipart/form-data" class="form">
+  <input type="text" name="name" placeholder="Student Name" required>
+  <input type="file" name="photo" required>
+  
+  <!-- Classroom Selection -->
+  <select name="classroom_id">
+      <option value="">Select Classroom (optional)</option>
+      {% for c in classrooms %}
+        <option value="{{ c.id }}">{{ c.name }}</option>
+      {% endfor %}
+  </select>
+
+  <button type="submit" class="btn btn-primary">Add Student</button>
+</form>
+
+<h3>Add Classroom</h3>
+<form method="POST" action="/add_classroom" class="form-inline">
+    <input type="text" name="name" placeholder="Classroom Name" required>
+    <button type="submit" class="btn btn-secondary">Add Classroom</button>
+</form>
+
+
+<h3>Registered Students</h3>
+<div class="student-grid">
+  {% for s in students %}
+    <div class="student-card">
+      <img src="{{ s.photo_path }}" alt="{{ s.name }}">
+      <p>{{ s.name }}{% if s.classroom %} - {{ s.classroom.name }}{% endif %}</p>
+      <form method="POST" action="/delete_student/{{ s.id }}">
+        <button type="submit" class="btn btn-danger">Delete</button>
+      </form>
+    </div>
+  {% endfor %}
+</div>
+
+<a href="/" class="back-button">← Back to Home</a>
+{% endblock %}

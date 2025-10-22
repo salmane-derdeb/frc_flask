@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Attendance Results</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 min-h-screen p-6">
+  <div class="max-w-3xl mx-auto text-center">
+    <h1 class="text-3xl font-bold mb-4">Attendance Results</h1>
+    <h2 class="text-xl mb-6 text-gray-700">Classroom: {{ classroom_name }}</h2>
+
+    <!-- Class Photo -->
+    <img src="{{ photo }}" class="rounded-lg shadow-md mx-auto mb-6 border border-gray-300 max-h-64">
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-left">
+      <!-- Present Students -->
+      <div class="p-4 rounded-lg shadow bg-green-50">
+        <h2 class="text-xl font-semibold mb-2 text-green-700">✅ Present</h2>
+        <ul class="list-disc list-inside">
+          {% for name, present in results.items() %}
+            {% if present %}
+              <li>{{ name }}</li>
+            {% endif %}
+          {% endfor %}
+        </ul>
+      </div>
+
+      <!-- Absent Students -->
+      <div class="p-4 rounded-lg shadow bg-red-50">
+        <h2 class="text-xl font-semibold mb-2 text-red-700">❌ Absent</h2>
+        <ul class="list-disc list-inside">
+          {% for name, present in results.items() %}
+            {% if not present %}
+              <li>{{ name }}</li>
+            {% endif %}
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+
+    <a href="/" class="inline-block mt-6 bg-blue-600 hover:bg-blue-700
+                     text-white px-5 py-2 rounded-lg font-semibold transition">
+      Go Back
+    </a>
+  </div>
+</body>
+</html>
